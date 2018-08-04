@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Azate\LaravelTelegramLoginAuth;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -73,7 +74,9 @@ final class TelegramLoginAuth
             return false;
         }
 
-        if ((time() - $data['auth_date'] ?? 0) > 86400) {
+        $authDate = Carbon::createFromTimestampUTC($data['auth_date']);
+
+        if (Carbon::now()->greaterThanOrEqualTo($authDate->addHour())) {
             return false;
         }
 
