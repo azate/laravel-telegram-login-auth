@@ -55,7 +55,7 @@ final class TelegramLoginAuth
     {
         $data = $this->getRequestData();
 
-        $checkHash = $data['hash'] ?? null;
+        $checkSum = $data['hash'] ?? '';
 
         $dataCheckString = collect($data)
             ->except('hash')
@@ -69,7 +69,7 @@ final class TelegramLoginAuth
         $secretKey = hash('sha256', config('telegram_login_auth.token'), true);
         $hash = hash_hmac('sha256', $dataCheckString, $secretKey);
 
-        if (strcmp($hash, $checkHash) !== 0) {
+        if (strcmp($hash, $checkSum) !== 0) {
             return false;
         }
 
