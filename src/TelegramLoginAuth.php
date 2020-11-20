@@ -1,103 +1,63 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Azate\LaravelTelegramLoginAuth;
 
-use Carbon\Carbon;
+use Azate\LaravelTelegramLoginAuth\Contracts\Telegram\Entity as EntityContract;
+use Azate\LaravelTelegramLoginAuth\Contracts\Validation\ValidatorChain as ValidatorChainContract;
+use Azate\LaravelTelegramLoginAuth\Telegram\EntityFromRequestFactory;
+use Azate\LaravelTelegramLoginAuth\Validation\Rules\ResponseNotOutdatedRule;
+use Azate\LaravelTelegramLoginAuth\Validation\Rules\SignatureRule;
+use Illuminate\Contracts\Config\Repository as ConfigContract;
 use Illuminate\Http\Request;
+use Exception;
 
-/**
- * Class TelegramLoginAuth
- *
- * @package Azate\TelegramLoginAuth
- */
 final class TelegramLoginAuth
 {
     /**
-     * @var Request
+     * @var ConfigContract
      */
-    private $request;
+    private $config;
 
     /**
-     * Create a new TelegramLoginAuth instance
-     *
+     * @var ValidatorChainContract
+     */
+    private $validatorChain;
+
+    public function __construct(ConfigContract $config, ValidatorChainContract $validatorChain)
+    {
+        $this->config = $config;
+        $this->validatorChain = $validatorChain;
+    }
+
+    /**
      * @param Request $request
+     * @return EntityContract|false
      */
-    public function __construct(Request $request)
+    public function validate(Request $request)
     {
-        $this->request = $request;
-    }
-
-    /**
-     * Returns only the requested data
-     *
-     * @return array
-     */
-    private function getRequestData(): array
-    {
-        return $this->request->only([
-            'id',
-            'first_name',
-            'last_name',
-            'username',
-            'photo_url',
-            'auth_date',
-            'hash',
-        ]);
-    }
-
-    /**
-     * Checks
-     *
-     * @return bool
-     */
-    public function validate(): bool
-    {
-        $data = $this->getRequestData();
-
-        $checkSum = $data['hash'] ?? '';
-
-        $dataCheckString = collect($data)
-            ->except('hash')
-            ->map(function ($value, $key) {
-                return $key . '=' . $value;
-            })
-            ->sort()
-            ->values()
-            ->implode("\n");
-
-        $secretKey = hash('sha256', config('telegram_login_auth.token'), true);
-        $hash = hash_hmac('sha256', $dataCheckString, $secretKey);
-
-        if (strcmp($hash, $checkSum) !== 0) {
-            return false;
+        try {
+            return $this->validateWithError($request);
+        } catch (Exception $exception) {
+            //
         }
 
-        $authDate = Carbon::createFromTimestampUTC($data['auth_date']);
-
-        if (Carbon::now()->greaterThanOrEqualTo($authDate->addHour())) {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
-    /**
-     * Returns the user data
-     *
-     * @return array
-     */
-    public function user(): array
+    public function validateWithError(Request $request): EntityContract
     {
-        $data = $this->getRequestData();
+        $entity = (new EntityFromRequestFactory($request))->create();
 
-        return [
-            'id' => $data['id'] ?? null,
-            'first_name' => $data['first_name'] ?? null,
-            'last_name' => $data['last_name'] ?? null,
-            'username' => $data['username'] ?? null,
-            'avatar' => $data['photo_url'] ?? null,
-        ];
+        if ($this->config->get('telegram_login_auth.validate.signature')) {
+            $this->validatorChain->addRule(new SignatureRule($this->config->get('telegram_login_auth.token')));
+        }
+
+        if ($this->config->get('telegram_login_auth.validate.response_outdated')) {
+            $this->validatorChain->addRule(new ResponseNotOutdatedRule());
+        }
+
+        $this->validatorChain->validate($entity);
+
+        return $entity;
     }
 }
