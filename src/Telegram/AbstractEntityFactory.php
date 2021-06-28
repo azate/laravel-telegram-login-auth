@@ -11,14 +11,32 @@ abstract class AbstractEntityFactory
     {
         $attributesCollection = new Collection($attributes);
 
-        if ($attributesCollection->count() !== count($this->getRequiredAttributes())) {
-            throw new NotAllRequiredAttributesException();
-        }
+        $this->validationRequiredAttributes($attributesCollection);
 
         return $attributesCollection;
     }
 
+    private function validationRequiredAttributes(Collection $attributes): void
+    {
+        $quantityRequiredAttributes = $attributes->keys()->filter(function ($key) {
+            return in_array($key, $this->getRequiredAttributes());
+        })->count();
+
+        if ($quantityRequiredAttributes !== count($this->getRequiredAttributes())) {
+            throw new NotAllRequiredAttributesException();
+        }
+    }
+
     protected function getRequiredAttributes(): array
+    {
+        return [
+            'id',
+            'auth_date',
+            'hash',
+        ];
+    }
+
+    protected function getAllowAttributes(): array
     {
         return [
             'id',
