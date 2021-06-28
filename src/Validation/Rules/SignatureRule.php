@@ -38,6 +38,7 @@ class SignatureRule implements RuleContract
     {
         return (new Collection($entity->toArray()))
             ->except('hash')
+            ->filter()
             ->map(function ($value, $key) {
                 return sprintf('%s=%s', $key, $value);
             })

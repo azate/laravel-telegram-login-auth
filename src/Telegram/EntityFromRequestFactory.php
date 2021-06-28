@@ -21,7 +21,7 @@ final class EntityFromRequestFactory extends AbstractEntityFactory implements En
 
     public function create(): EntityContract
     {
-        $attributes = $this->request->only($this->getRequiredAttributes());
+        $attributes = $this->request->only($this->getAllowAttributes());
         $attributesCollection = $this->createAttributesCollection($attributes);
 
         $entity = new Entity();

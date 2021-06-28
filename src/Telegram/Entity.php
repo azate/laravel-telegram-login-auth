@@ -13,22 +13,22 @@ final class Entity implements EntityContract
     private $id;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $firstName;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $lastName;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $username;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $photoUrl;
 
@@ -65,42 +65,42 @@ final class Entity implements EntityContract
         $this->id = $id;
     }
 
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): void
+    public function setFirstName(?string $firstName): void
     {
         $this->firstName = $firstName;
     }
 
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): void
+    public function setLastName(?string $lastName): void
     {
         $this->lastName = $lastName;
     }
 
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    public function setUsername(string $username): void
+    public function setUsername(?string $username): void
     {
         $this->username = $username;
     }
 
-    public function getPhotoUrl(): string
+    public function getPhotoUrl(): ?string
     {
         return $this->photoUrl;
     }
 
-    public function setPhotoUrl(string $photoUrl): void
+    public function setPhotoUrl(?string $photoUrl): void
     {
         $this->photoUrl = $photoUrl;
     }
