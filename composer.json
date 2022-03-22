@@ -10,11 +10,11 @@
         }
     ],
     "require": {
-        "php": "^7.2 || ^7.3 || ^7.4 || ^8",
-        "illuminate/contracts": "^6 || ^7 || ^8",
-        "illuminate/config": "^6 || ^7 || ^8",
-        "illuminate/http": "^6 || ^7 || ^8",
-        "illuminate/support": "^6 || ^7 || ^8"
+        "php": "^7.3 || ^7.4 || ^8",
+        "illuminate/contracts": "^8 || ^9",
+        "illuminate/config": "^8 || ^9",
+        "illuminate/http": "^8 || ^9",
+        "illuminate/support": "^8 || ^9"
     },
     "autoload": {
         "psr-4": {
