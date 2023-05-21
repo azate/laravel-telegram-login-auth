@@ -19,7 +19,7 @@ final class LaravelServiceProvider extends ServiceProvider
 
     private function getPackageConfigPath(): string
     {
-        return dirname(__DIR__, 2) . '/config/telegram_login_auth.php';
+        return dirname(__DIR__, 2).'/config/telegram_login_auth.php';
     }
 
     public function register(): void

@@ -9,14 +9,8 @@ use Illuminate\Support\Carbon;
 
 final class EntityFromRequestFactory extends AbstractEntityFactory implements EntityFactory
 {
-    /**
-     * @var Request
-     */
-    private $request;
-
-    public function __construct(Request $request)
+    public function __construct(private Request $request)
     {
-        $this->request = $request;
     }
 
     public function create(): EntityContract

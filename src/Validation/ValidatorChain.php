@@ -11,7 +11,7 @@ final class ValidatorChain implements ValidatorChainContract
     /**
      * @var RuleContract[]
      */
-    private $rules = [];
+    private array $rules = [];
 
     public function addRule(RuleContract $rule): void
     {

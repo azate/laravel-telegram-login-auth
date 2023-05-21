@@ -7,40 +7,19 @@ use Carbon\CarbonInterface;
 
 final class Entity implements EntityContract
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private string $id;
 
-    /**
-     * @var string|null
-     */
-    private $firstName;
+    private ?string $firstName;
 
-    /**
-     * @var string|null
-     */
-    private $lastName;
+    private ?string $lastName;
 
-    /**
-     * @var string|null
-     */
-    private $username;
+    private ?string $username;
 
-    /**
-     * @var string|null
-     */
-    private $photoUrl;
+    private ?string $photoUrl;
 
-    /**
-     * @var CarbonInterface
-     */
-    private $authDate;
+    private CarbonInterface $authDate;
 
-    /**
-     * @var string
-     */
-    private $hash;
+    private string $hash;
 
     public function toArray(): array
     {

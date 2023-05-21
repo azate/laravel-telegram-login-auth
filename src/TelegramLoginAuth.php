@@ -7,30 +7,19 @@ use Azate\LaravelTelegramLoginAuth\Contracts\Validation\ValidatorChain as Valida
 use Azate\LaravelTelegramLoginAuth\Telegram\EntityFromRequestFactory;
 use Azate\LaravelTelegramLoginAuth\Validation\Rules\ResponseNotOutdatedRule;
 use Azate\LaravelTelegramLoginAuth\Validation\Rules\SignatureRule;
+use Exception;
 use Illuminate\Contracts\Config\Repository as ConfigContract;
 use Illuminate\Http\Request;
-use Exception;
 
 final class TelegramLoginAuth
 {
-    /**
-     * @var ConfigContract
-     */
-    private $config;
-
-    /**
-     * @var ValidatorChainContract
-     */
-    private $validatorChain;
-
-    public function __construct(ConfigContract $config, ValidatorChainContract $validatorChain)
-    {
-        $this->config = $config;
-        $this->validatorChain = $validatorChain;
+    public function __construct(
+        private ConfigContract $config,
+        private ValidatorChainContract $validatorChain,
+    ) {
     }
 
     /**
-     * @param Request $request
      * @return EntityContract|false
      */
     public function validate(Request $request)

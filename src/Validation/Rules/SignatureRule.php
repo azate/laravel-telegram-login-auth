@@ -2,21 +2,15 @@
 
 namespace Azate\LaravelTelegramLoginAuth\Validation\Rules;
 
-use Azate\LaravelTelegramLoginAuth\Contracts\Validation\Rules\Rule as RuleContract;
 use Azate\LaravelTelegramLoginAuth\Contracts\Telegram\Entity as EntityContract;
+use Azate\LaravelTelegramLoginAuth\Contracts\Validation\Rules\Rule as RuleContract;
 use Azate\LaravelTelegramLoginAuth\Contracts\Validation\Rules\SignatureException;
 use Illuminate\Support\Collection;
 
 class SignatureRule implements RuleContract
 {
-    /**
-     * @var string
-     */
-    private $secretKey;
-
-    public function __construct(string $secretKey)
+    public function __construct(private string $secretKey)
     {
-        $this->secretKey = $secretKey;
     }
 
     public function validate(EntityContract $entity): void
@@ -54,6 +48,6 @@ class SignatureRule implements RuleContract
 
     private function isNotHashMatched(string $knownHash, string $userHash): bool
     {
-        return !hash_equals($knownHash, $userHash);
+        return ! hash_equals($knownHash, $userHash);
     }
 }
