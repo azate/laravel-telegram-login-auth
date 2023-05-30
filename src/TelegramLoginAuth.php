@@ -16,7 +16,8 @@ final class TelegramLoginAuth
     public function __construct(
         private ConfigContract $config,
         private ValidatorChainContract $validatorChain,
-    ) {
+    )
+    {
     }
 
     /**
