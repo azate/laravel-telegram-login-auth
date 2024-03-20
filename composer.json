@@ -11,10 +11,10 @@
     ],
     "require": {
         "php": "^8",
-        "illuminate/contracts": "^9 || ^10",
-        "illuminate/config": "^9 || ^10",
-        "illuminate/http": "^9 || ^10",
-        "illuminate/support": "^9 || ^10"
+        "illuminate/contracts": "^9 || ^10 || ^11",
+        "illuminate/config": "^9 || ^10 || ^11",
+        "illuminate/http": "^9 || ^10 || ^11",
+        "illuminate/support": "^9 || ^10 || ^11"
     },
     "autoload": {
         "psr-4": {
