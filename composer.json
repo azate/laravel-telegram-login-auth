@@ -1,7 +1,11 @@
 {
     "name": "azate/laravel-telegram-login-auth",
     "description": "Laravel Telegram Login Auth",
-    "keywords": ["laravel", "telegram", "auth"],
+    "keywords": [
+        "laravel",
+        "telegram",
+        "auth"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -11,10 +15,10 @@
     ],
     "require": {
         "php": "^8",
-        "illuminate/contracts": "^9 || ^10 || ^11",
-        "illuminate/config": "^9 || ^10 || ^11",
-        "illuminate/http": "^9 || ^10 || ^11",
-        "illuminate/support": "^9 || ^10 || ^11"
+        "illuminate/contracts": "^9 || ^10 || ^11 || ^12.0",
+        "illuminate/config": "^9 || ^10 || ^11 || ^12.0",
+        "illuminate/http": "^9 || ^10 || ^11 || ^12.0",
+        "illuminate/support": "^9 || ^10 || ^11 || ^12.0"
     },
     "autoload": {
         "psr-4": {
